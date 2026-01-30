@@ -1,0 +1,4 @@
+from .infos_assembly_line.extract_data import main as main_extract_data_assembly_line
+from .infos_painting_line.extract_data import main as main_extract_data_painting_line
+from .infos_painting_line.remove_values import main as main_remove_values_painting_lines
+from .lb_balance.define_values import main as main_define_values_lb_balance

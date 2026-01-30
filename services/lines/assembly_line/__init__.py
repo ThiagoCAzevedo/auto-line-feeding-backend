@@ -1,0 +1,1 @@
+from .extract_data import main as main_extract_data_assembly_line

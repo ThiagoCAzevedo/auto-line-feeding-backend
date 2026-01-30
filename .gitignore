@@ -1,0 +1,3 @@
+/database/extras/*.xlsx
+/database/extras/*.XLSX
+/database/*.duckdb

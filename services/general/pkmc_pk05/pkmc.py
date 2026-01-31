@@ -2,7 +2,7 @@ from helpers.cleaner import CleanerBase
 import polars as pl
 
 
-class DefineDataframe(CleanerBase):
+class PKMC_DefineDataframe(CleanerBase):
     def __init__(self):
         CleanerBase.__init__(self)
 
@@ -19,8 +19,20 @@ class PKMC_Cleaner(CleanerBase):
     
     def clean_columns(self, df):
         return df.with_columns(
-            pl.col("Material").str.replace_all(" ","").str.replace_all(r"\.", ""),
-            pl.col("Posição de armazenamento").str.replace_all("MAX","")
+            pl.col("Posição de armazenamento")
+                .cast(pl.Utf8)
+                .str.replace_all(r"(?i)max", "")
+                .str.replace_all(r"[ :]", "")
+                .str.replace_all(r"\D+", "")
+                .cast(pl.Int64, strict=False)
+                .fill_null(0),
+            pl.col("Material")
+                .cast(pl.Utf8)
+                .str.strip_chars()
+                .str.replace_all(r"\s+", "")
+                .str.replace_all(r"\.", "")
+                .str.replace_all(r"[^\w-]", "")
+                .str.to_uppercase()
         )
 
     def rename_columns(self, df):

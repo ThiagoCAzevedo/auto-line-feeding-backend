@@ -2,7 +2,7 @@ from helpers.cleaner import CleanerBase
 import polars as pl
 
 
-class DefineDataframe(CleanerBase):
+class PK05_DefineDataframe(CleanerBase):
     def __init__(self):
         CleanerBase.__init__(self)
 

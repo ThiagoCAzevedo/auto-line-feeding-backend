@@ -3,3 +3,4 @@
 /database/*.duckdb
 *__pycache__
 *.env
+/storage

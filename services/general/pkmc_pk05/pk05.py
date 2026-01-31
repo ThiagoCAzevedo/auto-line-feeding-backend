@@ -26,13 +26,3 @@ class PK05_Cleaner(CleanerBase):
             "Denominação SupM": "denominacao_pk05",
         }
         return self._rename(df, rename_map)
-    
-
-dd = DefineDataframe()
-df = dd.create_df()
-
-pk05 = PK05_Cleaner()
-df = pk05.filter_columns(df)
-df = pk05.rename_columns(df)
-
-print(df.collect())

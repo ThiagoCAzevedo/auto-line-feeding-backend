@@ -1,11 +1,8 @@
-from services.pipelines.pkmc_pk05.pipeline import pkmc_pk05_pipeline
+from services.pipelines.pkmc.pipeline import pkmc_pipeline
+from services.pipelines.pk05.pipeline import pk05_pipeline
 
-"""
-PIPELINES:
-- PKMC E PK05 - OK
-- 
-"""
 
 PIPELINES = {
-    "pkmc_pk05": pkmc_pk05_pipeline,
+    "pkmc": pkmc_pipeline,
+    "pk05": pk05_pipeline,
 }

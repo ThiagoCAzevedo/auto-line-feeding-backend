@@ -15,7 +15,18 @@ class PK05_Cleaner(CleanerBase):
         CleanerBase.__init__(self)
 
     def filter_columns(self, df):
-        return df.filter(pl.col("Depósito") == "LB01")
+        df = df.filter(
+            pl.col("deposito_pk05") == "LB01",
+            (pl.col("tacto").is_not_null() &
+            pl.col("tacto").str.starts_with("T")))
+        return df
+    
+    def create_columns(self, df):
+        df = df.with_columns(
+            pl.col("denominacao_pk05").str.extract(r"(T\d+)", 1).alias("tacto")
+        )
+        df = df.with_row_index(name="id")
+        return df
 
     def rename_columns(self, df):
         rename_map = {

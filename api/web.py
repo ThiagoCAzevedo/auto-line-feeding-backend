@@ -8,7 +8,7 @@ app = FastAPI(title="Auto Line Feeding", docs_url="/alf-doc")
 
 @app.post("/pipeline/{pipeline_service}")
 def run_pipeline(pipeline_service):
-    return PipelinesOrchestrator().run_pipeline_async(pipeline_service)
+    return PipelinesOrchestrator().run_pipeline(pipeline_service)
 
 @app.post("/worker/start/{worker_service}")
 def start_worker(worker_service):

@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class MySQL_Connector:
     def __init__(self):
         self.host = os.getenv("MYSQL_HOST")

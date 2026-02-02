@@ -1,4 +1,5 @@
 from .pkmc import PKMC_Cleaner, PKMC_DefineDataframe
+from database.upserter import UpsertInfos
 import polars as pl
 
 
@@ -13,8 +14,9 @@ def pkmc_cleaner() -> pl.DataFrame:
         .pipe(cleaner.create_columns)
     )
 
+def pkmc_upserter(df_pkmc):
+    UpsertInfos().upsert_df("pkmc", df_pkmc, 1000)
 
 def pkmc_pipeline() -> pl.DataFrame:
     df_pkmc = pkmc_cleaner()
-    print(df_pkmc.collect().columns)
-    
+    pkmc_upserter(df_pkmc)

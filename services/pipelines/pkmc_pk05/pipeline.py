@@ -26,4 +26,5 @@ def pk05_cleaner() -> pl.DataFrame:
 def pkmc_pk05_pipeline() -> pl.DataFrame:
     df_pkmc = pkmc_cleaner()
     df_pk05 = pk05_cleaner()
-    return DataFrameJoinCleaner(df_pkmc, df_pk05).cleaner_joiner().collect()
+    df_joined = DataFrameJoinCleaner(df_pkmc, df_pk05).cleaner_joiner().collect()
+    # Adicionar valores no BD de df_joined

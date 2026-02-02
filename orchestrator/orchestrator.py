@@ -6,12 +6,15 @@ from orchestrator.workers_registry import WORKERS
 # -- PIPELINES - WILL RUN ONLY WHEN CALLED --
 class PipelinesOrchestrator:
     def run_pipeline(self, name):
-        return PIPELINES.name
+        PIPELINES[name]() 
+        return {"status": f"service {name} executed successfully (sync)"}
+
 
     def run_pipeline_async(self, name):
         thread = Thread(target=PIPELINES[name], daemon=True)
         thread.start()
-        return thread
+        return {"status": f"service {name} executed successfully (async)"}
+        # return thread
     
 
 # -- WORKERS - WILL RUN EVERYTIME --

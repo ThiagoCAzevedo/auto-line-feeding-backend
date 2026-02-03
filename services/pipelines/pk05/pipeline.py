@@ -1,4 +1,5 @@
 from .pk05 import PK05_Cleaner, PK05_DefineDataframe
+from database.queries import UpsertInfos
 import polars as pl
 
 
@@ -13,5 +14,9 @@ def pk05_cleaner() -> pl.DataFrame:
     )
 
 
+def pk05_upserter(df_pkmc):
+    UpsertInfos().upsert_df("pk05", df_pkmc, 1000)
+
 def pk05_pipeline() -> pl.DataFrame:
     df_pk05 = pk05_cleaner()
+    pk05_upserter(df_pk05)

@@ -1,7 +1,6 @@
 from fastapi import FastAPI, APIRouter, HTTPException, Query, Path
 from fastapi.responses import HTMLResponse
 from orchestrator.orchestrator import PipelinesOrchestrator, WorkersOrchestrator
-import uvicorn
 
 
 app = FastAPI(title="Auto Line Feeding", docs_url="/alf-doc")

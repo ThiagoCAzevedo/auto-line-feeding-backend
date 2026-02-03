@@ -3,5 +3,6 @@ requests
 uvicorn
 fastapi
 numpy
+pywin32
 # para instalar corretamente, rodar:
 # pip install -r requirements.txt --trusted-host pypi.org --trusted-host files.pythonhosted.org --cert false

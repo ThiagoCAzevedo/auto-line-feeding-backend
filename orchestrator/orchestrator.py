@@ -25,7 +25,7 @@ class WorkersOrchestrator:
             return "workers already running"
 
         workers = WORKERS[name]
-        thread = Thread(target=workers.run, daemon=True)
+        thread = Thread(target=workers, daemon=True)
 
         self.running_workers[name] = {
             "workers": workers,

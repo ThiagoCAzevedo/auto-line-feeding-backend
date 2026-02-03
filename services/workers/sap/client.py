@@ -8,7 +8,7 @@ import time, os
 load_dotenv()
 
 
-class SapLauncher:
+class SAP_Launcher:
     def __init__(self):
         self.sap_path = os.getenv("SAP_PATH")
 
@@ -26,8 +26,8 @@ class SapLauncher:
             return None
 
 
-class SapSessionProvider:
-    def __init__(self, launcher: SapLauncher):
+class SAP_SessionProvider:
+    def __init__(self, launcher: SAP_Launcher):
         self.launcher = launcher
         self.connection_name = os.getenv("SAP_CONNECTION_NAME")
 
@@ -47,7 +47,7 @@ class SapSessionProvider:
         return conn.Children(0)
 
 
-class SapAuthenticator:
+class SAP_Authenticator:
     def __init__(self):
         self.user = os.getenv("SAP_USER")
         self.password = os.getenv("SAP_PSWD")
@@ -58,8 +58,8 @@ class SapAuthenticator:
         session.findById("wnd[0]").sendVKey(0)
 
 
-class SapClient:
-    def __init__(self, session_provider: SapSessionProvider, authenticator: SapAuthenticator, launcher: SapLauncher):
+class SAP_Client:
+    def __init__(self, session_provider: SAP_SessionProvider, authenticator: SAP_Authenticator, launcher: SAP_Launcher):
         self.session_provider = session_provider
         self.authenticator = authenticator
         self.launcher = launcher

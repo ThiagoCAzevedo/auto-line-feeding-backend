@@ -1,14 +1,14 @@
-from client import SapLauncher, SapSessionProvider, SapAuthenticator, SapClient
-from requester import QuantityToRequest, LM01_Requester
-from reqdone import LT22_Session, LT22_Selectors, LT22_Parameters, LT22_Submit
-from listreq import SP02_Session, SP02_Rows, SP02_Actions
+from .client import SAP_Launcher, SAP_SessionProvider, SAP_Authenticator, SAP_Client
+from .requester import QuantityToRequest, LM01_Requester
+from .reqdone import LT22_Session, LT22_Selectors, LT22_Parameters, LT22_Submit
+from .listreq import SP02_Session, SP02_Rows, SP02_Actions
 
 
 def initialize_sap():
-    launcher = SapLauncher()
-    provider = SapSessionProvider(launcher)
-    auth = SapAuthenticator()
-    sap = SapClient(provider, auth, launcher)
+    launcher = SAP_Launcher()
+    provider = SAP_SessionProvider(launcher)
+    auth = SAP_Authenticator()
+    sap = SAP_Client(provider, auth, launcher)
     return sap
 
 
@@ -48,7 +48,7 @@ def sp02_download_latest_lt22(sap):
 
 def lm01_request(sap):
     df = QuantityToRequest()._define_diference_to_request()
-    LM01_Requester()._request_lm01(sap, df)
+    LM01_Requester(sap, df)._request_lm01()
 
 
 def sap_worker():

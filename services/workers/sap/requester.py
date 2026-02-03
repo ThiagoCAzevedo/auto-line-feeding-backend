@@ -34,35 +34,23 @@ class QuantityToRequest:
 
 
 class Requester:
+    def __init__(self, sap, df):
+        self.sap = sap
+        self.df = df.collect()
+
     def _request_lm01(self):
-        pass
+        session, _ = self.sap.run_transaction("/nLM01")
 
-#         try:
-#             session, already_opened_sap_session = main_tasks_sap.call_specific_transaction_sap("/nlm01")
+        session.findById("wnd[0]/usr/txtGV_OT").setFocus()
+        session.findById("wnd[0]/usr/btnTEXT1").press()
 
-#             try:
-#                 # Tenta focar no campo GV_OT
-#                 session.findById("wnd[0]/usr/txtGV_OT").setFocus()
-#                 session.findById("wnd[0]/usr/btnTEXT1").press()
-#             except Exception as e:
-#                 try:
-#                     session.findById("wnd[0]/usr/btnTEXT2").press()
-#                     session.findById("wnd[0]/usr/btnTEXT1").press()
-#                 except Exception as e2:
-#                     return  # Encerra a função se não conseguir prosseguir
+        for row in self.df.iter_rows(named=True):
+            qtd_caixas = int(row["qtd_caixas_para_solicitar"])
+            num_circ = str(row["num_circ_regul_pkmc"])
 
-#             for row in self.df_values_pkmc_pk05.iter_rows(named=True):
-#                 qtd_caixas_para_solicitar = row['qtd_caixas_para_solicitar']
-#                 num_circ_regul_pkmc = row['num_circ_regul_pkmc']
-
-#                 # solicita OT
-#                 # for i in range(int(qtd_caixas_para_solicitar)):
-#                     # session.findById("wnd[0]/usr/ctxtVG_PKNUM").Text = str(num_circ_regul_pkmc)
-#                     # session.findById("wnd[0]").sendVKey(0)
-#                     # session.findById("wnd[0]").sendVKey(8)
-#                     # session.findById("wnd[0]/usr/btnRLMOB-POK").press()
-#                     # session.findById("wnd[0]/usr/btnBTOK").press()
-
-#         except Exception:
-#             raise
-
+            for _ in range(qtd_caixas):
+                session.findById("wnd[0]/usr/ctxtVG_PKNUM").Text = num_circ
+                session.findById("wnd[0]").sendVKey(0)
+                session.findById("wnd[0]").sendVKey(8)
+                session.findById("wnd[0]/usr/btnRLMOB-POK").press()
+                session.findById("wnd[0]/usr/btnBTOK").press()

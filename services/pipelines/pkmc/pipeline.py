@@ -1,5 +1,5 @@
 from .pkmc import PKMC_Cleaner, PKMC_DefineDataframe
-from database.upserter import UpsertInfos
+from database.queries import UpsertInfos
 import polars as pl
 
 

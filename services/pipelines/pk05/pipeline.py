@@ -1,5 +1,5 @@
 from .pk05 import PK05_Cleaner, PK05_DefineDataframe
-from database.upserter import UpsertInfos
+from database.queries import UpsertInfos
 import polars as pl
 
 

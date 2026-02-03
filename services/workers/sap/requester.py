@@ -33,7 +33,7 @@ class QuantityToRequest:
         return df
 
 
-class Requester:
+class LM01_Requester:
     def __init__(self, sap, df):
         self.sap = sap
         self.df = df.collect()

@@ -5,7 +5,7 @@ import pythoncom
 import time, os
 
 
-load_dotenv()
+load_dotenv("config/.env")
 
 
 class SAP_Launcher:

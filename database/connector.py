@@ -1,8 +1,7 @@
 import mysql.connector, os
 from dotenv import load_dotenv
 
-load_dotenv()
-
+load_dotenv("config/.env")
 
 class MySQL_Connector:
     def __init__(self):

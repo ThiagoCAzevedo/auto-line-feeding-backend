@@ -8,4 +8,5 @@ class AssemblyLineApi:
         self.al_url = os.getenv("AL_API_ENDPOINT")
 
     def _return_response(self):
-        return requests.get(self.al_url, verify=False)
+        response = requests.get(self.al_url, verify=False)
+        return response.content

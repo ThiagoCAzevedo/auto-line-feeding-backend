@@ -1,4 +1,3 @@
-from .resolve_path import ResolvePaths
 from .loader import DataLoader
 from pathlib import Path
 from dotenv import load_dotenv

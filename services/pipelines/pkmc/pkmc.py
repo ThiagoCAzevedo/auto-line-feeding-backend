@@ -16,13 +16,13 @@ class PKMC_Cleaner(CleanerBase):
         
     def filter_columns(self, df):
         df = df.filter(
-            pl.col("tipo_deposito_pkmc") == "B01"
+            pl.col("deposit_type") == "B01"
         )
         return df
     
     def clean_columns(self, df):
         return df.with_columns(
-            pl.col("qtd_max_caixas")
+            pl.col("qty_max_box")
                 .cast(pl.Utf8)
                 .str.replace_all(r"(?i)max", "")
                 .str.replace_all(r"[ :]", "")
@@ -40,9 +40,9 @@ class PKMC_Cleaner(CleanerBase):
 
     def create_columns(self, df):
         df = df.with_columns([
-            (pl.col("qtd_por_caixa") * pl.col("qtd_max_caixas")).alias("qtd_total_teorica"),
-            (pl.col("qtd_por_caixa") * (pl.col("qtd_max_caixas") - 1)).alias("qtd_para_reabastecimento"),
-            pl.col("area_abastecimento").str.extract(r"(P\d+[A-Z]?)", 1).alias("prateleira")
+            (pl.col("qty_per_box") * pl.col("qty_max_box")).alias("total_theoretical_qty"),
+            (pl.col("qty_per_box") * (pl.col("qty_max_box") - 1)).alias("qty_for_restock"),
+            pl.col("supply_area").str.extract(r"(P\d+[A-Z]?)", 1).alias("rack")
         ])
         df = df.with_row_index(name="id")
         return df
@@ -50,15 +50,15 @@ class PKMC_Cleaner(CleanerBase):
     def rename_columns(self, df):
         rename_map = {
             "Material": "partnumber",
-            "Área abastec.prod.": "area_abastecimento",
-            "Nº circ.regul.": "num_circ_regul_pkmc",
-            "Tipo de depósito": "tipo_deposito_pkmc",
-            "Posição no depósito": "posicao_deposito_pkmc",
-            "Container": "container_pkmc",
-            "Texto breve de material": "descricao_partnumber",
-            "Norma de embalagem": "norma_embalagem_pkmc",
-            "Quantidade Kanban": "qtd_por_caixa", 
-            "Posição de armazenamento": "qtd_max_caixas",
+            "Área abastec.prod.": "supply_area",
+            "Nº circ.regul.": "num_reg_circ",
+            "Tipo de depósito": "deposit_type",
+            "Posição no depósito": "deposit_position",
+            "Container": "container",
+            "Texto breve de material": "description",
+            "Norma de embalagem": "pack_standard",
+            "Quantidade Kanban": "qty_per_box", 
+            "Posição de armazenamento": "qty_max_box",
         }
         return self._rename(df, rename_map)
     

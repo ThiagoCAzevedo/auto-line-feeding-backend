@@ -4,7 +4,7 @@ uvicorn
 fastapi
 numpy
 pywin32
-
+python-multipart
 
 
 

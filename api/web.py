@@ -11,29 +11,32 @@ app = FastAPI(
 )
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 
-@app.post("/pipeline/{pipeline_service}")
+
+# -- PIPELINE --
+@app.post("/pipeline/{pipeline_service}", tags=["pipelines"])
 def run_pipeline(pipeline_service):
     return PipelinesOrchestrator().run_pipeline(pipeline_service)
 
 
-@app.post("/worker/start/{worker_service}")
+# -- WORKERS --
+@app.post("/worker/start/{worker_service}", tags=["workers"])
 def start_worker(worker_service):
     return WorkersOrchestrator().start_worker(worker_service)
 
-@app.post("/worker/stop/{worker_service}")
+@app.post("/worker/stop/{worker_service}", tags=["workers"])
 def stop_worker(worker_service):
     return WorkersOrchestrator().start_worker(worker_service)
 
 
 # -- FILES -- 
-@app.get("/files/list/")
+@app.get("/files/list/", tags=["files"])
 def list_files():
     return ListExcelFiles()._list_files()
 
-@app.post("/files/upload/")
+@app.post("/files/upload/", tags=["files"])
 def upload_files(file: UploadFile = File(...)):
     return UploadFiles()._upload_files(file)
 
-@app.delete("/delete/{filename}")
+@app.delete("/delete/{filename}", tags=["files"])
 def delete_files(filename):
     return DeleteFiles()._delete_files(filename)

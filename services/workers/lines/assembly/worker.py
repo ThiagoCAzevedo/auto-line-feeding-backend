@@ -1,7 +1,6 @@
 from .api import AssemblyLineApi
 from .processor import DefineDataFrame, TransformDataFrame
 from database.queries import UpsertInfos
-import json
 
 
 def return_response():
@@ -9,8 +8,7 @@ def return_response():
 
 def process_response(response):
     cleaner = DefineDataFrame(response)
-    cleaned = cleaner._remove_reception(response)
-    df = cleaner._extract_car_records(cleaned)
+    df = cleaner._extract_car_records(response)
 
     transformer = TransformDataFrame(df)
     df = transformer.transform()

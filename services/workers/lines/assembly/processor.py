@@ -5,17 +5,10 @@ class DefineDataFrame:
     def __init__(self, response: dict):
         self.response = response
 
-    def _remove_reception(self, d):
-        if isinstance(d, dict):
-            return {k: self._remove_reception(v) for k, v in d.items() if k != "reception"}
-        elif isinstance(d, list):
-            return [self._remove_reception(x) for x in d]
-        return d
-
     def _extract_car_records(self, cleaned):
         registers = []
         for lane_key, lane_val in cleaned.items():
-            if lane_key.startswith("lane_"):
+            if lane_key.startswith("lane_") or lane_key.startswith("reception"):
                 for fb_key, fb_val in lane_val.items():
                     for tact_key, tact_val in fb_val.items():
                         if isinstance(tact_val, dict) and "CAR" in tact_val and tact_val["CAR"]:
@@ -41,4 +34,3 @@ class TransformDataFrame:
                 pl.col("lfdnr_sequence").cast(pl.Utf8)
             ])
         )
-

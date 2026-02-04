@@ -7,7 +7,10 @@ class UpsertInfos(MySQL_Connector):
         MySQL_Connector.__init__(self)
 
     def upsert_df(self, table, df, batch_size):
-        df = df.collect()
+
+        if isinstance(df, pl.LazyFrame):
+            df = df.collect()
+
         total_rows = len(df)
         for i in range(0, total_rows, batch_size):
             batch = df.slice(i, batch_size)

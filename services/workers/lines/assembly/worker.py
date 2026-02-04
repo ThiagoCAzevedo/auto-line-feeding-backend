@@ -1,7 +1,25 @@
 from .api import AssemblyLineApi
+from .processor import DefineDataFrame, TransformDataFrame
+from database.queries import UpsertInfos
+import json
 
-def access_al_api():
+
+def return_response():
     return AssemblyLineApi()._return_response()
 
-def al_worker():
-    response = access_al_api()
+def process_response(response):
+    cleaner = DefineDataFrame(response)
+    cleaned = cleaner._remove_reception(response)
+    df = cleaner._extract_car_records(cleaned)
+
+    transformer = TransformDataFrame(df)
+    df = transformer.transform()
+    return df
+
+def upserter(df):
+    UpsertInfos().upsert_df("assembly_line", df, 1000)
+
+def al_worker():    
+    response = return_response()
+    df = process_response(response)
+    upserter(df)

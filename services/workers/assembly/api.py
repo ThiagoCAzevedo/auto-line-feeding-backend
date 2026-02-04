@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 import os, requests
-load_dotenv()
+load_dotenv("config/.env")
 
 
 class AssemblyLineApi:

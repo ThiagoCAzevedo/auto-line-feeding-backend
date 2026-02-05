@@ -1,5 +1,5 @@
-from .forecast import ReturnReceptionValues, ReturnValuesFX4PD, MainAggregations
-from database.queries import UpsertInfos, SelectInfos
+from .forecaster import ReturnReceptionValues, ReturnValuesFX4PD, MainAggregations
+from database.queries import UpsertInfos
 import polars as pl
 
 def get_reception_values():
@@ -21,7 +21,7 @@ def return_aggregation():
 def upserter(table, df):
     UpsertInfos().upsert_df(table, df, 1000)
 
-def consumption_worker():
+def forecast_worker():
     df = get_reception_values()
     # com esse valor acima, fazer a pesquisa no sistema do fx4pd
 

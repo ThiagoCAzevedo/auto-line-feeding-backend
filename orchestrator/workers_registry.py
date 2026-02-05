@@ -1,8 +1,8 @@
 from services.workers.sap.worker import sap_worker
-from services.workers.consumption.worker import consumption_worker
+from services.workers.forecast.worker import forecast_worker
 
 
 WORKERS = {
-    "consumption": consumption_worker,
+    "forecast": forecast_worker,
     "sap": sap_worker
 }

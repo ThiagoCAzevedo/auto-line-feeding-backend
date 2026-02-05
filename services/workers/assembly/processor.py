@@ -17,6 +17,8 @@ class DefineDataFrame:
                                 "knr": car.get("KNR"),
                                 "model": car.get("MODELL"),
                                 "lfdnr_sequence": car.get("LFDNR"),
+                                "werk": car.get("WERK"),
+                                "spj": car.get("SPJ"),
                                 "lane": tact_val.get("LANE", lane_key)
                             })
         return pl.DataFrame(registers)
@@ -33,4 +35,9 @@ class TransformDataFrame:
                 pl.col("lane").str.replace("lane_", ""),
                 pl.col("lfdnr_sequence").cast(pl.Utf8)
             ])
+        )
+    
+    def create_fx4pd_column(self):
+        return self.df.with_columns(
+            (pl.col("werk") + pl.col("spj") + pl.col("knr")).alias("knr_fx4pd")
         )

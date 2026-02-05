@@ -7,7 +7,6 @@ class UpsertInfos(MySQL_Connector):
         MySQL_Connector.__init__(self)
 
     def upsert_df(self, table, df, batch_size):
-
         if isinstance(df, pl.LazyFrame):
             df = df.collect()
 

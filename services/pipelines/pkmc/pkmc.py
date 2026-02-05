@@ -29,9 +29,10 @@ class PKMC_Cleaner(CleanerBase):
                 .str.replace_all(r"\D+", "")
                 .cast(pl.Int64, strict=False)
                 .fill_null(0),
+
             pl.col("partnumber")
                 .cast(pl.Utf8)
-                .str.strip_chars()
+                .str.strip()         
                 .str.replace_all(r"\s+", "")
                 .str.replace_all(r"\.", "")
                 .str.replace_all(r"[^\w-]", "")
@@ -43,7 +44,7 @@ class PKMC_Cleaner(CleanerBase):
             (pl.col("qty_per_box") * pl.col("qty_max_box")).alias("total_theoretical_qty"),
             (pl.col("qty_per_box") * (pl.col("qty_max_box") - 1)).alias("qty_for_restock"),
             pl.col("supply_area").str.extract(r"(P\d+[A-Z]?)", 1).alias("rack")
-        ])
+        ]).drop_nulls("rack")
         df = df.with_row_index(name="id")
         return df
 

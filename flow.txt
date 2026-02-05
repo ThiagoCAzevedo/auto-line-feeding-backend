@@ -1,9 +1,0 @@
-flow:
-1. assembly line: pega knrs que estão em reception
-2. fx4pd: verifica peças que serão consumidas por carros em reception:
-3. parametrizar cada knr com todas peças que irá consumir e, consequentemente, todos takts
-4. salvar na tabela que será criada
-5. ficar verificando apenas essa tabela: quando aquele um knr passar num tacto que é esperado ele passar, debita a peça e remove esse valor da tabela (esse knr)
-
-
-criar tabela para knrs que estão em reception e todas suas peças que serão usadas e takts --> OK

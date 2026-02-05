@@ -25,7 +25,7 @@ def start_worker(worker_service):
 
 @app.post("/worker/stop/{worker_service}", tags=["workers"])
 def stop_worker(worker_service):
-    return WorkersOrchestrator().start_worker(worker_service)
+    return WorkersOrchestrator().stop_workers(worker_service)
 
 
 # -- FILES -- 

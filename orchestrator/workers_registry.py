@@ -1,9 +1,8 @@
-
-from services.workers.lines.assembly.worker import al_worker
 from services.workers.sap.worker import sap_worker
+from services.workers.consumption.worker import consumption_worker
 
 
 WORKERS = {
-    "assembly_line": al_worker,
+    "consumption": consumption_worker,
     "sap": sap_worker
 }

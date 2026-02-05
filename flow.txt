@@ -1,7 +1,10 @@
 flow:
-1. assembly line: pega knrs que estão em reception
-2. fx4pd: verifica peças que serão consumidas por carros em reception:
+1. assembly line: pega knrs que estão em reception --> OK
+2. fx4pd: verifica peças que serão consumidas por carros em reception: --> OK
 3. parametrizar cada knr com todas peças que irá consumir e, consequentemente, todos takts
+  3.1. primeiro join: entre tabela de assembly_line e tabela fx4pd, com base na coluna knr_fx4pd
+  3.2. segundo joint: entre tabela de pkmc e pk05, com base na coluna de área de abastecimento --> OK
+  3.3. terceiro join: entre o df retornado do primeiro join com o df retornado do segundo join
 4. salvar na tabela que será criada
 5. ficar verificando apenas essa tabela: quando aquele um knr passar num tacto que é esperado ele passar, debita a peça e remove esse valor da tabela (esse knr)
 

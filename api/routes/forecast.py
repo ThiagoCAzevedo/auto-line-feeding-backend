@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Query, Depends
+
 from database.queries import UpsertInfos
 
 from services.forecast.buff_al import ReturnBuffAssemblyLineValues
@@ -12,10 +13,10 @@ from helpers.services.http_exception import HTTP_Exceptions
 router = APIRouter()
 
 
-@router.get("/response/buff_al")
-def get_buff_al_response(
+@router.get("/response/buffer-al", summary="Get Only Buffer Values From Assembly Line DataBase")
+def get_buffer_al_response(
     svc: ReturnBuffAssemblyLineValues = Depends(DependenciesInjection.get_buff_al_service),
-    limit: int = Query(5000, ge=1, le=100000, description="Limita a quantidade de registros retornados"),
+    limit: int = Query(5000, ge=1, le=100000),
 ):
     try:
         df = svc.return_values_from_db().collect()
@@ -24,7 +25,7 @@ def get_buff_al_response(
         raise HTTP_Exceptions().http_502("Erro ao buscar origem (buff_al): ", e)
 
 
-@router.get("/response/fx4pd")
+@router.get("/response/fx4pd", summary="Get Values From FX4PD")
 def get_fx4pd_response(
     svc: ReturnFX4PDValues = Depends(DependenciesInjection.get_fx4pd_service),
     limit: int = Query(5000, ge=1, le=100000),
@@ -36,8 +37,8 @@ def get_fx4pd_response(
         raise HTTP_Exceptions().http_502("Erro ao buscar origem (fx4pd)", e)
 
 
-@router.get("/response")
-def get_forecast_response(
+@router.get("/result", summary="Get Values Forecasted")
+def get_forecast_result(
     svc: DefineForecastValues = Depends(DependenciesInjection.get_forecast_service),
     limit: int = Query(5000, ge=1, le=100000),
 ):
@@ -48,7 +49,7 @@ def get_forecast_response(
         raise HTTP_Exceptions().http_502("Erro ao buscar origem (forecast)", e)
 
 
-@router.post("/upsert/fx4pd")
+@router.post("/upsert/fx4pd", summary="Upsert FX4PD Values In The DataBase")
 def upsert_fx4pd(
     batch_size: int = Query(10_000, ge=1, le=100_000),
     fx4pd_svc: ReturnFX4PDValues = Depends(DependenciesInjection.get_fx4pd_service),
@@ -67,7 +68,7 @@ def upsert_fx4pd(
         raise HTTP_Exceptions().http_500("Erro no upsert (fx4pd)", e)
 
 
-@router.post("/upsert")
+@router.post("/upsert", summary="Upsert Forecasted Values In The DataBase")
 def upsert_forecast_pipeline(
     batch_size: int = Query(10_000, ge=1, le=100_000),
     fx4pd_svc: ReturnFX4PDValues = Depends(DependenciesInjection.get_fx4pd_service),

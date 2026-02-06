@@ -3,6 +3,7 @@ from os.path import isfile, join
 from dotenv import load_dotenv
 import os
 
+
 load_dotenv("config/.env")
 
 

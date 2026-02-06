@@ -1,8 +1,8 @@
 from dotenv import load_dotenv
-import os
-import requests
+import os, requests, urllib3
 
 load_dotenv("config/.env")
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class AssemblyLineApi:
@@ -10,6 +10,6 @@ class AssemblyLineApi:
         self.al_url = os.getenv("AL_API_ENDPOINT")
 
     def get_raw_response(self):
-        response = requests.get(self.al_url, verify=False, timeout=10)
+        response = requests.get(self.al_url, verify=False, timeout=5)
         response.raise_for_status()
         return response.json()

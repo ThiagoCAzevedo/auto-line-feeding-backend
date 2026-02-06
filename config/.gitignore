@@ -1,0 +1,6 @@
+./database/extras/*.xlsx
+./database/extras/*.XLSX
+./database/*.duckdb
+*__pycache__
+*.env
+./storage

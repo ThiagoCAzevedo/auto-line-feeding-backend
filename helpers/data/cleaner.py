@@ -1,18 +1,20 @@
-from .resolve_path import ResolvePaths
 from .loader import DataLoader
 from pathlib import Path
 from dotenv import load_dotenv
 import polars as pl, os
 
-load_dotenv()
+load_dotenv("config/.env")
 
 
 class CleanerBase:
     def __init__(self):
-        self.resolve_paths = ResolvePaths()
+        self.os_user = os.getenv("USERNAME")
+
+    def _resolve_path(self, path_template):
+        return Path(path_template.format(username=self.os_user)).resolve()
 
     def _get_path(self, env_key: str) -> Path:
-        return Path(self.resolve_paths.resolve_path(os.getenv(env_key)))
+        return Path(self._resolve_path(os.getenv(env_key)))
 
     def _load_file(self, env_key):
         path = self._get_path(env_key)

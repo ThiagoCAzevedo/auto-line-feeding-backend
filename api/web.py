@@ -1,9 +1,10 @@
 from fastapi import FastAPI, File, UploadFile
-from orchestrator.orchestrator import PipelinesOrchestrator, WorkersOrchestrator
-from services.storage import ListExcelFiles, UploadFiles, DeleteFiles
+# from orchestrator.orchestrator import PipelinesOrchestrator, WorkersOrchestrator
+# from services.storage import ListExcelFiles, UploadFiles, DeleteFiles
 from fastapi.middleware.gzip import GZipMiddleware
 
 from .routes.assembly import router as assembly_router
+from .routes.forecast import router as forecast_router
 
 app = FastAPI(
     title="Auto Line Feeding", 
@@ -13,6 +14,8 @@ app = FastAPI(
 
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 app.include_router(assembly_router, prefix="/assembly", tags=["assembly"])
+app.include_router(forecast_router, prefix="/forecast", tags=["forecast"])
+
 
 
 # -- PIPELINE --

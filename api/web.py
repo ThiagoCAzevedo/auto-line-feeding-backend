@@ -5,6 +5,8 @@ from fastapi.middleware.gzip import GZipMiddleware
 
 from .routes.assembly import router as assembly_router
 from .routes.forecast import router as forecast_router
+from .routes.consumption import router as consumption_router
+
 
 app = FastAPI(
     title="Auto Line Feeding", 
@@ -15,23 +17,7 @@ app = FastAPI(
 app.add_middleware(GZipMiddleware, minimum_size=1000)
 app.include_router(assembly_router, prefix="/assembly", tags=["assembly"])
 app.include_router(forecast_router, prefix="/forecast", tags=["forecast"])
-
-
-
-# -- PIPELINE --
-# @app.post("/pipeline/{pipeline_service}", tags=["pipelines"])
-# def run_pipeline(pipeline_service):
-#     return PipelinesOrchestrator().run_pipeline(pipeline_service)
-
-
-# # -- WORKERS --
-# @app.post("/worker/start/{worker_service}", tags=["workers"])
-# def start_worker(worker_service):
-#     return WorkersOrchestrator().start_worker(worker_service)
-
-# @app.post("/worker/stop/{worker_service}", tags=["workers"])
-# def stop_worker(worker_service):
-#     return WorkersOrchestrator().stop_workers(worker_service)
+app.include_router(consumption_router, prefix="/consumption", tags=["consumption"])
 
 
 # # -- FILES -- 

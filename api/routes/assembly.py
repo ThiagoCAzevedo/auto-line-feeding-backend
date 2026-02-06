@@ -1,6 +1,9 @@
 from fastapi import APIRouter, HTTPException, Query, Depends
+
 from services.assembly.assembly_api import AccessAssemblyLineApi
+
 from database.queries import UpsertInfos
+
 from helpers.services.assembly import BuildPipeline, DependeciesInjection
 from helpers.services.http_exception import HTTP_Exceptions
 
@@ -8,15 +11,15 @@ from helpers.services.http_exception import HTTP_Exceptions
 router = APIRouter()
 
 
-@router.get("/response/raw")
-def get_raw_response(api: AccessAssemblyLineApi = Depends(DependeciesInjection.get_api)):
+@router.get("/response/json", summary="Get Response From Assembly Line API")
+def get_json_response(api: AccessAssemblyLineApi = Depends(DependeciesInjection.get_api)):
     try:
-        return api.get_raw_response()
+        return api.get_json_response()
     except Exception as e:
         raise HTTP_Exceptions().http_502("Erro ao buscar origem: ", e)
 
 
-@router.get("/response/processed")
+@router.get("/response/processed", summary="Get Processed Response From Assembly Line API")
 def get_processed_response(
     api: AccessAssemblyLineApi = Depends(DependeciesInjection.get_api),
     limit: int = Query(5000, ge=1, le=100000)
@@ -28,7 +31,7 @@ def get_processed_response(
         raise HTTP_Exceptions().http_500("Erro ao processar registros:", e)
 
 
-@router.post("/upsert")
+@router.post("/upsert", summary="Upsert Assembly Line Values In The DataBase")
 def upsert_assembly(
     api: AccessAssemblyLineApi = Depends(DependeciesInjection.get_api),
     upsert: UpsertInfos = Depends(DependeciesInjection.get_upsert),

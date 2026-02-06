@@ -5,7 +5,7 @@ class DefineDataFrame:
     def __init__(self, response: dict):
         self.response = response
 
-    def _extract_car_records(self, cleaned):
+    def extract_car_records(self, cleaned):
         registers = []
         for lane_key, lane_val in cleaned.items():
             if lane_key.startswith("lane_") or lane_key.startswith("reception"):
@@ -37,7 +37,7 @@ class TransformDataFrame:
             ])
         )
     
-    def create_fx4pd_column(self):
+    def attach_fx4pd(self):
         return self.df.with_columns(
             (pl.col("werk") + pl.col("spj") + pl.col("knr")).alias("knr_fx4pd")
         )

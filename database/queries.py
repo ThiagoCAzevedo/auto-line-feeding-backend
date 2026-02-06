@@ -14,6 +14,7 @@ class UpsertInfos(MySQL_Connector):
         for i in range(0, total_rows, batch_size):
             batch = df.slice(i, batch_size)
             self._upsert_batch(table, batch)
+        return total_rows
 
     def _upsert_batch(self, table, df):
         if not table.replace("_", "").isalnum():

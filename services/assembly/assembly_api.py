@@ -5,7 +5,7 @@ load_dotenv("config/.env")
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
-class AssemblyLineApi:
+class AccessAssemblyLineApi:
     def __init__(self):
         self.al_url = os.getenv("AL_API_ENDPOINT")
 

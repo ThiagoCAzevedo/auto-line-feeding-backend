@@ -19,7 +19,8 @@ class DefineDataFrame:
                                 "lfdnr_sequence": car.get("LFDNR"),
                                 "werk": car.get("WERK"),
                                 "spj": car.get("SPJ"),
-                                "lane": tact_val.get("LANE", lane_key)
+                                "lane": tact_val.get("LANE", lane_key),
+                                "takt": tact_val.get("TACT",)
                             })
         return pl.DataFrame(registers)
     

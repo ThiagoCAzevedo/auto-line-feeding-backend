@@ -30,10 +30,10 @@ class ConsumeValues(SelectInfos):
             (pl.col("lb_balance") - pl.col("qty_usage").fill_null(0)).alias("lb_balance")
         ).select(["partnumber", "lb_balance"]).collect()
 
-    def _update_infos(self, df):
+    def _update_infos(self, df, batch_size):
         UpdateInfos().update_df(
             table="pkmc",
             df=df,
             key_column="partnumber",
-            batch_size=1000
+            batch_size=batch_size
         )

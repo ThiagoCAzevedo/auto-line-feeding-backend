@@ -16,16 +16,17 @@ class LT22_Selectors:
         self.node = "wnd[0]/usr/ssub%_SUBSCREEN_%_SUB%_CONTAINER:SAPLSSEL:2001/ssubSUBSCREEN_CONTAINER2:SAPLSSEL:2000/cntlSUB_CONTAINER/shellcont/shellcont/shell/shellcont[1]/shell"
         self.take = "wnd[0]/usr/ssub%_SUBSCREEN_%_SUB%_CONTAINER:SAPLSSEL:2001/ssubSUBSCREEN_CONTAINER2:SAPLSSEL:2000/cntlSUB_CONTAINER/shellcont/shellcont/shell/shellcont[0]/shell"
 
-    def expand(self, node_id: str):
-        self.session.findById(self.node).expandNode(node_id)
+    def expand(self):
+        self.session.findById(self.node).expandNode("         68")
 
-    def select(self, node_id: str):
-        self.session.findById(self.node).selectNode(node_id)
+    def select(self):
+        self.session.findById(self.node).selectNode("        108")
+        self.session.findById(self.node).selectNode("        123")
 
-    def set_top(self, node_id: str):
-        self.session.findById(self.node).topNode = node_id
+    def top(self):
+        self.session.findById(self.node).topNode = "        123"
 
-    def press_take(self):
+    def take(self):
         self.session.findById(self.take).pressButton("TAKE")
 
 

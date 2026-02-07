@@ -43,8 +43,17 @@ class PKMC_Cleaner(CleanerBase):
         df = df.with_columns([
             (pl.col("qty_per_box") * pl.col("qty_max_box")).alias("total_theoretical_qty"),
             (pl.col("qty_per_box") * (pl.col("qty_max_box") - 1)).alias("qty_for_restock"),
-            pl.col("supply_area").str.extract(r"(P\d+[A-Z]?)", 1).alias("rack")
-        ]).drop_nulls("rack")
+            pl.lit(2000).alias("lb_balance"),
+            pl.col("supply_area").str.extract(r"(P\d+[A-Z]?)", 0).alias("rack")
+        ])
+
+        df = df.with_columns([
+            (pl.col("lb_balance") / (pl.col("qty_per_box") - 1))
+                .round(2)
+                .alias("lb_balance_box")
+        ])
+
+        df = df.drop_nulls("rack")
         df = df.with_row_index(name="id")
         return df
 

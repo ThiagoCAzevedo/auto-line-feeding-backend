@@ -21,10 +21,6 @@ def lt22_verify_requests(sap):
 
     params.set_deposit()
 
-    selectors.expand("         68")
-    selectors.select("        108")
-    selectors.select("        123")
-    selectors.top("        123")
     selectors.take()
 
     params.set_b01()

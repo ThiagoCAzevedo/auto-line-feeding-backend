@@ -2,7 +2,9 @@ from fastapi import APIRouter, Query, Depends
 
 from database.queries import UpsertInfos
 from services.request.requester import QuantityToRequest, LM01_Requester
+from services.sap.session_manager import SAPSessionManager
 from helpers.services.request import DependenciesInjection, BuildPipeline
+
 from helpers.services.http_exception import HTTP_Exceptions
 
 
@@ -44,18 +46,20 @@ def upsert_to_request(
     
 
 @router.post("/requester", summary="Requester To Request Values In SAP")
-def upsert_to_request(
-    batch_size: int = Query(10_000, ge=1, le=100_000),
+def requester(
     svc: LM01_Requester = Depends(DependenciesInjection.get_lm01_requester),
+    svc_sap_session: SAPSessionManager = Depends(DependenciesInjection.get_sap_session)
 ):
     try:
-        df = BuildPipeline.build_to_request(svc)
-        rows = svc._request_lm01(sap_session, df)
+        session = svc_sap_session.get_session()
+        if not session:
+            raise Exception("Nenhuma sessão SAP ativa. Chame /sap/session primeiro.")
+
+        rows = svc._request_lm01(session)
 
         return {
-            "message": "Requester To Request concluído com sucesso.",
+            "message": "Requester concluído com sucesso.",
             "rows": rows,
-            "batch_size": batch_size,
         }
 
     except Exception as e:

@@ -1,0 +1,8 @@
+from .assembly import router as assembly_router
+from .forecast import router as forecast_router
+from .consumption import router as consumption_router
+from .files import router as static_files_router
+from .pkmc import router as pkmc_router
+from .pk05 import router as pk05_router
+from .pk05 import router as pk05_router
+from .request import router as request_router

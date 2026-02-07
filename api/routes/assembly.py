@@ -22,7 +22,7 @@ def get_json_response(api: AccessAssemblyLineApi = Depends(DependeciesInjection.
 @router.get("/response/processed", summary="Get Processed Response From Assembly Line API")
 def get_processed_response(
     api: AccessAssemblyLineApi = Depends(DependeciesInjection.get_api),
-    limit: int = Query(5000, ge=1, le=100000)
+    limit: int = Query(50, ge=1, le=100000)
 ):
     try:
         df = BuildPipeline().build_assembly(api)
